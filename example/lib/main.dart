@@ -99,6 +99,10 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
+
+
+  //声明 路由和 Route 的 映射
   static Map<String, FlutterBoostRouteFactory> routerMap = {
     // '/': (settings, uniqueId) {
     //   return PageRouteBuilder<dynamic>(

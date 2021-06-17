@@ -8,8 +8,8 @@ import 'flutter_boost_app.dart';
 import 'messages.dart';
 import 'overlay_entry.dart';
 
-typedef FlutterBoostRouteFactory = Route<dynamic> Function(
-    RouteSettings settings, String uniqueId);
+// ignore: public_member_api_docs, lines_longer_than_80_chars
+typedef FlutterBoostRouteFactory = Route<dynamic> Function(RouteSettings settings, String uniqueId);
 
 FlutterBoostRouteFactory routeFactoryWrapper(
     FlutterBoostRouteFactory routeFactory) {
