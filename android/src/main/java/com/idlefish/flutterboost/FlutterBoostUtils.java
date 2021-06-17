@@ -21,6 +21,9 @@ public class FlutterBoostUtils {
         return UUID.randomUUID().toString() + "_" + name;
     }
 
+    /**
+     * 通过 FlutterEngine获取到 FlutterBoostPlugin （flutter boost 的 插件）
+     */
     public static FlutterBoostPlugin getPlugin(FlutterEngine engine) {
         if (engine != null) {
             try {

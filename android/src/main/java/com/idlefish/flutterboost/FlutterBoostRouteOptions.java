@@ -2,6 +2,9 @@ package com.idlefish.flutterboost;
 
 import java.util.Map;
 
+/**
+ * 路由信息记录类
+ */
 public class FlutterBoostRouteOptions {
     private final String pageName;
     private final Map<String, Object> arguments;

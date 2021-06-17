@@ -20,10 +20,16 @@ import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
 
+/**
+ * flutter boost 插件
+ *
+ * NativeRouterApi： flutter 调用 原生的 BasicMessageChannel
+ * ActivityAware： flutter 框架中的类，可以使 flutterPlugin 感受到 activity 的生命周期
+ */
 public class FlutterBoostPlugin implements FlutterPlugin, NativeRouterApi, ActivityAware {
     private static final String TAG = FlutterBoostPlugin.class.getSimpleName();
     private FlutterEngine engine;
-    private FlutterRouterApi channel;
+    private FlutterRouterApi channel;//原生调用 flutter的 channel
     private FlutterBoostDelegate delegate;
     private StackInfo dartStack;
     private SparseArray<String> pageNames;
@@ -45,8 +51,10 @@ public class FlutterBoostPlugin implements FlutterPlugin, NativeRouterApi, Activ
 
     @Override
     public void onAttachedToEngine(FlutterPluginBinding binding) {
+        // 预制 binaryMessenger 来准备处理消息
         NativeRouterApi.setup(binding.getBinaryMessenger(), this);
         engine = binding.getFlutterEngine();
+        //原生调用 flutter的 channel
         channel = new FlutterRouterApi(binding.getBinaryMessenger());
         pageNames = new SparseArray<String>();
     }
@@ -57,6 +65,11 @@ public class FlutterBoostPlugin implements FlutterPlugin, NativeRouterApi, Activ
         channel = null;
     }
 
+    /**
+     * flutter 打开原生页面
+     *
+     * 将参数 封装为 FlutterBoostRouteOptions 并通过 FlutterBoostDelegate 回到给 APP 自己处理
+     */
     @Override
     public void pushNativeRoute(CommonParams params) {
         if (delegate != null) {
@@ -287,6 +300,10 @@ public class FlutterBoostPlugin implements FlutterPlugin, NativeRouterApi, Activ
         }
     }
 
+    /**
+     * flutterPlugin 被添加到 Activity 时会被回调
+     * @param activityPluginBinding
+     */
     @Override
     public void onAttachedToActivity(ActivityPluginBinding activityPluginBinding) {
         activityPluginBinding.addActivityResultListener((requestCode, resultCode, intent) -> {

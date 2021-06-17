@@ -79,14 +79,18 @@ public class FlutterBoost {
             FlutterEngineCache.getInstance().put(ENGINE_ID, engine);
         }
 
+        //如果dart代码还没有开始执行，就指定入口 并开始执行
         if (!engine.getDartExecutor().isExecutingDart()) {
+            //设置初始 路由
             engine.getNavigationChannel().setInitialRoute(options.initialRoute());
+            // 开始执行dart的入口文件 （默认为 main.dart）
             engine.getDartExecutor().executeDartEntrypoint(new DartExecutor.DartEntrypoint(
                     FlutterMain.findAppBundlePath(), options.dartEntrypoint()));
         }
+        // FlutterEngine 初始化完成后，并 开始执行dart入口文件后 回调onStart 方法
         if (callback != null) callback.onStart(engine);
 
-        // 2. set delegate
+        //给 FlutterBoostPlugin 设置  FlutterBoostDelegate
         getPlugin().setDelegate(delegate);
 
         //3. register ActivityLifecycleCallbacks
@@ -95,6 +99,8 @@ public class FlutterBoost {
 
     /**
      * Gets the FlutterBoostPlugin.
+     *
+     * 获取flutter boost 插件
      *
      * @return the FlutterBoostPlugin.
      */
