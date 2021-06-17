@@ -41,6 +41,7 @@ public class FlutterBoostActivity extends FlutterActivity implements FlutterView
         super.onCreate(savedInstanceState);
         //找到 flutterView
         flutterView = FlutterBoostUtils.findFlutterView(getWindow().getDecorView());
+        //添加到 FlutterContainerManager 中
         FlutterBoost.instance().getPlugin().onContainerCreated(this);
     }
 

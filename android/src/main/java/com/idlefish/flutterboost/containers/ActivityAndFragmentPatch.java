@@ -7,6 +7,10 @@ import io.flutter.embedding.android.RenderMode;
 import io.flutter.embedding.engine.FlutterEngine;
 
 /**
+ *
+ * 在官方ActivityAndFragment的基础上进行补充和自定义：
+ *
+ *
  * 在官方ActivityAndFragment的基础上进行补充修复
  * 1.指定getRenderMode 为texture,不然页面切换时候会前后页面会重叠
  * 2.接管键盘回退事件
