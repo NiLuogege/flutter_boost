@@ -1,7 +1,7 @@
 import 'flutter_boost_app.dart';
 import 'messages.dart';
 
-/// The MessageChannel counterpart on the Dart side.
+//原生调用flutter 的 channel
 class BoostFlutterRouterApi extends FlutterRouterApi {
   factory BoostFlutterRouterApi(FlutterBoostAppState appState) {
     if (_instance == null) {

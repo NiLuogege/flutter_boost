@@ -59,6 +59,8 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
   final Map<String, Completer<Object>> _pendingResult = <String, Completer<Object>>{};
 
   List<BoostContainer> get containers => _containers;
+
+  //BoostContainer 的 缓存
   final List<BoostContainer> _containers = <BoostContainer>[];
 
   /// All interceptors from widget
@@ -67,7 +69,7 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
   BoostContainer get topContainer => containers.last;
 
   NativeRouterApi get nativeRouterApi => _nativeRouterApi;
-  NativeRouterApi _nativeRouterApi;
+  NativeRouterApi _nativeRouterApi;//flutter 调用 native的 channel
 
   BoostFlutterRouterApi get boostFlutterRouterApi => _boostFlutterRouterApi;
   BoostFlutterRouterApi _boostFlutterRouterApi;
@@ -87,13 +89,16 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
         'please refer to "class CustomFlutterBinding" in example project');
 
     _containers.add(_createContainer(PageInfo(pageName: widget.initialRoute)));
+    //初始化 NativeRouterApi (flutter 调用原生)
     _nativeRouterApi = NativeRouterApi();
+    // 初始化 BoostFlutterRouterApi (原生调用flutter)
     _boostFlutterRouterApi = BoostFlutterRouterApi(this);
     super.initState();
 
     // Refresh the containers data to overlayKey to show the page matching
     // initialRoute. Use addPostFrameCallback is because to wait
     // overlayKey.currentState to load complete....
+    // 刷新页面以显示 初始化路由对应的页面
     WidgetsBinding.instance.addPostFrameCallback((_) {
       refresh();
       _addAppLifecycleStateEventListener();
@@ -170,6 +175,7 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
     _activePointers.toList().forEach(WidgetsBinding.instance.cancelPointer);
   }
 
+  //刷新页面
   void refresh() {
     refreshAllOverlayEntries(containers);
 
@@ -180,12 +186,15 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
     }());
   }
 
+  //创建页面唯一id
   String _createUniqueId(String pageName) {
     return '${DateTime.now().millisecondsSinceEpoch}_$pageName';
   }
 
   BoostContainer _createContainer(PageInfo pageInfo) {
+    //设置唯一id
     pageInfo.uniqueId ??= _createUniqueId(pageInfo.pageName);
+    //创建一个 BoostContainer
     return BoostContainer(key: ValueKey<String>(pageInfo.uniqueId), pageInfo: pageInfo);
   }
 
