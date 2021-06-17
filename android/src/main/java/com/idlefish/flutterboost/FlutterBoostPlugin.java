@@ -22,7 +22,7 @@ import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
 
 /**
  * flutter boost 插件
- *
+ * <p>
  * NativeRouterApi： flutter 调用 原生的 BasicMessageChannel
  * ActivityAware： flutter 框架中的类，可以使 flutterPlugin 感受到 activity 的生命周期
  */
@@ -67,7 +67,7 @@ public class FlutterBoostPlugin implements FlutterPlugin, NativeRouterApi, Activ
 
     /**
      * flutter 打开原生页面
-     *
+     * <p>
      * 将参数 封装为 FlutterBoostRouteOptions 并通过 FlutterBoostDelegate 回到给 APP 自己处理
      */
     @Override
@@ -88,6 +88,12 @@ public class FlutterBoostPlugin implements FlutterPlugin, NativeRouterApi, Activ
         }
     }
 
+
+    /**
+     * 原生 打开flutter页面
+     * <p>
+     * 将参数 封装为 FlutterBoostRouteOptions 并通过 FlutterBoostDelegate 回到给 APP 自己处理
+     */
     @Override
     public void pushFlutterRoute(CommonParams params) {
         if (delegate != null) {
@@ -271,18 +277,22 @@ public class FlutterBoostPlugin implements FlutterPlugin, NativeRouterApi, Activ
         Log.v(TAG, "## onContainerHide: " + channel);
     }
 
+    /**
+     * 有flutter 容器创建了
+     */
     public void onContainerCreated(FlutterViewContainer container) {
         Log.v(TAG, "#onContainerCreated: " + container.getUniqueId());
         FlutterContainerManager.instance().addContainer(container.getUniqueId(), container);
-        if (FlutterContainerManager.instance().getContainerSize() == 1) {
-           FlutterBoost.instance().changeFlutterAppLifecycle(FlutterBoost.FLUTTER_APP_STATE_RESUMED);
+        if (FlutterContainerManager.instance().getContainerSize() == 1) { //当有一个的时候 就改变flutter侧的 整体生命周期为 RESUMED
+            FlutterBoost.instance().changeFlutterAppLifecycle(FlutterBoost.FLUTTER_APP_STATE_RESUMED);
         }
     }
 
     public void onContainerAppeared(FlutterViewContainer container) {
         String uniqueId = container.getUniqueId();
         FlutterContainerManager.instance().activateContainer(uniqueId, container);
-        pushRoute(uniqueId, container.getUrl(), container.getUrlParams(), reply -> {});
+        pushRoute(uniqueId, container.getUrl(), container.getUrlParams(), reply -> {
+        });
         onContainerShow(uniqueId);
     }
 
@@ -291,17 +301,23 @@ public class FlutterBoostPlugin implements FlutterPlugin, NativeRouterApi, Activ
         onContainerHide(uniqueId);
     }
 
+
+    /**
+     * flutter 容器销毁了
+     */
     public void onContainerDestroyed(FlutterViewContainer container) {
         String uniqueId = container.getUniqueId();
-        removeRoute(uniqueId, reply -> {});
+        removeRoute(uniqueId, reply -> {
+        });
         FlutterContainerManager.instance().removeContainer(uniqueId);
-        if (FlutterContainerManager.instance().getContainerSize() == 0) {
+        if (FlutterContainerManager.instance().getContainerSize() == 0) {//没有一个flutter 容器的时候 就是PAUSED 状态
             FlutterBoost.instance().changeFlutterAppLifecycle(FlutterBoost.FLUTTER_APP_STATE_PAUSED);
         }
     }
 
     /**
      * flutterPlugin 被添加到 Activity 时会被回调
+     *
      * @param activityPluginBinding
      */
     @Override

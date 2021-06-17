@@ -28,6 +28,9 @@ import static com.idlefish.flutterboost.containers.FlutterActivityLaunchConfigs.
 import static com.idlefish.flutterboost.containers.FlutterActivityLaunchConfigs.EXTRA_URL;
 import static com.idlefish.flutterboost.containers.FlutterActivityLaunchConfigs.EXTRA_URL_PARAM;
 
+/**
+ * 承载 flutter 的 activity
+ */
 public class FlutterBoostActivity extends FlutterActivity implements FlutterViewContainer {
     private static final String TAG = "FlutterBoostActivity";
     private final String who = UUID.randomUUID().toString();
@@ -36,6 +39,7 @@ public class FlutterBoostActivity extends FlutterActivity implements FlutterView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //找到 flutterView
         flutterView = FlutterBoostUtils.findFlutterView(getWindow().getDecorView());
         FlutterBoost.instance().getPlugin().onContainerCreated(this);
     }
