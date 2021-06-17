@@ -1,10 +1,13 @@
 package com.idlefish.flutterboost;
 
+/**
+ * flutter boost 的配置
+ */
 public class FlutterBoostSetupOptions {
-    private final String initialRoute;
-    private final String dartEntrypoint;
-    private final String[] shellArgs;
-    private final boolean shouldOverrideBackForegroundEvent;
+    private final String initialRoute; //初始路由 默认 /
+    private final String dartEntrypoint; // dart 代码入口 默认为 main(main.dart)
+    private final String[] shellArgs; // 在创建 FlutterEngine 时会用到 
+    private final boolean shouldOverrideBackForegroundEvent; // 这是干啥的
 
     private FlutterBoostSetupOptions(Builder builder) {
         this.initialRoute = builder.initialRoute;

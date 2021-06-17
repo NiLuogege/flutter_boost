@@ -15,6 +15,9 @@ import io.flutter.embedding.engine.FlutterEngineCache;
 import io.flutter.embedding.engine.dart.DartExecutor;
 import io.flutter.view.FlutterMain;
 
+/**
+ * 入口
+ */
 public class FlutterBoost {
     public static final String ENGINE_ID = "flutter_boost_default_engine";
     public static final String APP_LIFECYCLE_CHANGED_KEY = "app_lifecycle_changed_key";
@@ -54,15 +57,24 @@ public class FlutterBoost {
         setup(application, delegate, callback, FlutterBoostSetupOptions.createDefault());
     }
 
+
+    /**
+     * Initializes engine and plugin.
+     *
+     * @param application the application
+     * @param delegate    the FlutterBoostDelegate
+     * @param callback    Invoke the callback when the engine was started.
+     * @param options flutter boost 配置
+     */
     public void setup(Application application, FlutterBoostDelegate delegate, Callback callback, FlutterBoostSetupOptions options) {
         if (options == null) {
             options = FlutterBoostSetupOptions.createDefault();
         }
         isBackForegroundEventOverridden = options.shouldOverrideBackForegroundEvent();
 
-        // 1. initialize default engine
+        // 1. 初始化 FlutterEngine
         FlutterEngine engine = getEngine();
-        if (engine == null) {
+        if (engine == null) {//没有获取到就创建一个 并缓存到 FlutterEngineCache 中
             engine = new FlutterEngine(application, options.shellArgs());
             FlutterEngineCache.getInstance().put(ENGINE_ID, engine);
         }
