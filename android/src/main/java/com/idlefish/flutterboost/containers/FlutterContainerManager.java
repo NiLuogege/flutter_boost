@@ -6,6 +6,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * flutter 容器管理这 ，缓存了  allContainers  和 activeContainers
+ */
 public class FlutterContainerManager {
 
     private FlutterContainerManager() {

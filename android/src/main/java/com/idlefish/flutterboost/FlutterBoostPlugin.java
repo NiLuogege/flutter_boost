@@ -108,6 +108,9 @@ public class FlutterBoostPlugin implements FlutterPlugin, NativeRouterApi, Activ
         }
     }
 
+    /**
+     * 关闭一个页面，通过 uniqueId 找对对应 FlutterViewContainer 然后进行关闭
+     */
     @Override
     public void popRoute(CommonParams params) {
         String uniqueId = params.getUniqueId();
@@ -121,6 +124,9 @@ public class FlutterBoostPlugin implements FlutterPlugin, NativeRouterApi, Activ
         }
     }
 
+    /**
+     * 获取 dartStack
+     */
     @Override
     public StackInfo getStackFromHost() {
         if (dartStack == null) {
@@ -130,12 +136,18 @@ public class FlutterBoostPlugin implements FlutterPlugin, NativeRouterApi, Activ
         return dartStack;
     }
 
+    /**
+     * 报错 dartStack
+     */
     @Override
     public void saveStackToHost(StackInfo arg) {
         dartStack = arg;
         Log.v(TAG, "#saveStackToHost: " + dartStack);
     }
 
+    /**
+     * 发送事件的原生
+     */
     @Override
     public void sendEventToNative(CommonParams arg) {
         //deal with the event from flutter side
@@ -157,6 +169,9 @@ public class FlutterBoostPlugin implements FlutterPlugin, NativeRouterApi, Activ
         }
     }
 
+    /**
+     * 添加 EventListener 并返回 一个移除的 接口
+     */
     ListenerRemover addEventListener(String key, EventListener listener) {
         assert (key != null && listener != null);
 
@@ -179,6 +194,9 @@ public class FlutterBoostPlugin implements FlutterPlugin, NativeRouterApi, Activ
         }
     }
 
+    /**
+     * 打开flutter 页面
+     */
     public void pushRoute(String uniqueId, String pageName, Map<String, Object> arguments,
                           final FlutterRouterApi.Reply<Void> callback) {
         if (channel != null) {
@@ -227,6 +245,7 @@ public class FlutterBoostPlugin implements FlutterPlugin, NativeRouterApi, Activ
         }
     }
 
+    //通知flutter侧 activity处于前台
     public void onForeground() {
         if (channel != null) {
             checkEngineState();
@@ -239,6 +258,7 @@ public class FlutterBoostPlugin implements FlutterPlugin, NativeRouterApi, Activ
         Log.v(TAG, "## onForeground: " + channel);
     }
 
+    //通知flutter侧 activity处于后台
     public void onBackground() {
         if (channel != null) {
             checkEngineState();
@@ -251,6 +271,7 @@ public class FlutterBoostPlugin implements FlutterPlugin, NativeRouterApi, Activ
         Log.v(TAG, "## onBackground: " + channel);
     }
 
+    //容器显示后的回掉
     public void onContainerShow(String uniqueId) {
         if (channel != null) {
             checkEngineState();
@@ -288,14 +309,24 @@ public class FlutterBoostPlugin implements FlutterPlugin, NativeRouterApi, Activ
         }
     }
 
+    /**
+     * 当 activity 或者 fragment resume 时会调用
+     * @param container
+     */
     public void onContainerAppeared(FlutterViewContainer container) {
         String uniqueId = container.getUniqueId();
+        //记录活跃的 FlutterViewContainer
         FlutterContainerManager.instance().activateContainer(uniqueId, container);
+        //打开对应的flutter 页面
         pushRoute(uniqueId, container.getUrl(), container.getUrlParams(), reply -> {
         });
         onContainerShow(uniqueId);
     }
 
+    /**
+     * 当 activity 或者 fragment onPause时会调用
+     * @param container
+     */
     public void onContainerDisappeared(FlutterViewContainer container) {
         String uniqueId = container.getUniqueId();
         onContainerHide(uniqueId);
