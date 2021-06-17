@@ -90,10 +90,10 @@ public class FlutterBoost {
         // FlutterEngine 初始化完成后，并 开始执行dart入口文件后 回调onStart 方法
         if (callback != null) callback.onStart(engine);
 
-        //给 FlutterBoostPlugin 设置  FlutterBoostDelegate
+        //2. 给 FlutterBoostPlugin 设置  FlutterBoostDelegate
         getPlugin().setDelegate(delegate);
 
-        //3. register ActivityLifecycleCallbacks
+        //3. 注册 acitivity 生命周期回掉
         setupActivityLifecycleCallback(application, isBackForegroundEventOverridden);
     }
 

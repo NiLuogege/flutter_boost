@@ -7,7 +7,7 @@ public class FlutterBoostSetupOptions {
     private final String initialRoute; //初始路由 默认 /
     private final String dartEntrypoint; // dart 代码入口 默认为 main(main.dart)
     private final String[] shellArgs; // 在创建 FlutterEngine 时会用到 
-    private final boolean shouldOverrideBackForegroundEvent; // 这是干啥的
+    private final boolean shouldOverrideBackForegroundEvent; // 是否回掉给flutter测，app 切到前台 和后台的 事件 在 FlutterBoost 的内部类 BoostActivityLifecycle 中使用了
 
     private FlutterBoostSetupOptions(Builder builder) {
         this.initialRoute = builder.initialRoute;
