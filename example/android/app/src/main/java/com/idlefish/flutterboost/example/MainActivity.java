@@ -14,6 +14,7 @@ import com.idlefish.flutterboost.containers.FlutterBoostActivity;
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
+
 import android.util.Log;
 
 import io.flutter.embedding.android.FlutterActivityLaunchConfigs;
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static WeakReference<MainActivity> sRef;
     private final int REQUEST_CODE = 999;
     private TextView mOpenNative;
-    private TextView mOpenFlutter;
+    private TextView mOpenFlutter, open_flutter_1;
     private TextView mOpenFlutterFragment;
     private TextView mOpenCustomViewTab;
 
@@ -39,11 +40,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mOpenNative = findViewById(R.id.open_native);
         mOpenFlutter = findViewById(R.id.open_flutter);
+        open_flutter_1 = findViewById(R.id.open_flutter_1);
         mOpenFlutterFragment = findViewById(R.id.open_flutter_fragment);
         mOpenCustomViewTab = findViewById(R.id.open_custom_view_tab);
 
         mOpenNative.setOnClickListener(this);
         mOpenFlutter.setOnClickListener(this);
+        open_flutter_1.setOnClickListener(this);
         mOpenFlutterFragment.setOnClickListener(this);
         mOpenCustomViewTab.setOnClickListener(this);
     }
@@ -58,12 +61,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         Map<String, Object> params = new HashMap<>();
-        params.put("string","a string");
+        params.put("string", "a string");
         params.put("bool", true);
         params.put("int", 666);
         //Add some params if needed.
         if (v == mOpenNative) {
-            NativeRouter.openPageByUrl(this, NativeRouter.NATIVE_PAGE_URL , params);
+            NativeRouter.openPageByUrl(this, NativeRouter.NATIVE_PAGE_URL, params);
         } else if (v == mOpenFlutter) {
             Intent intent = new FlutterBoostActivity.CachedEngineIntentBuilder(FlutterBoostActivity.class)
                     .backgroundMode(FlutterActivityLaunchConfigs.BackgroundMode.opaque)
@@ -72,8 +75,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     .urlParams(params)
                     .build(this);
             startActivityForResult(intent, REQUEST_CODE);
+        } else if (v == open_flutter_1) {
+            Intent intent = new FlutterBoostActivity.CachedEngineIntentBuilder(FlutterBoostActivity.class)
+                    .backgroundMode(FlutterActivityLaunchConfigs.BackgroundMode.opaque)
+                    .destroyEngineWithActivity(false)
+                    .url("/")
+                    .urlParams(params)
+                    .build(this);
+            startActivityForResult(intent, REQUEST_CODE);
         } else if (v == mOpenFlutterFragment) {
-            NativeRouter.openPageByUrl(this, NativeRouter.FLUTTER_FRAGMENT_PAGE_URL,params);
+            NativeRouter.openPageByUrl(this, NativeRouter.FLUTTER_FRAGMENT_PAGE_URL, params);
         } else if (v == mOpenCustomViewTab) {
             NativeRouter.openPageByUrl(this, NativeRouter.FLUTTER_CUSTOM_VIEW_URL, params);
         }
