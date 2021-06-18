@@ -33,6 +33,11 @@ class CommonParams {
       ..opaque = pigeonMap['opaque'] as bool
       ..key = pigeonMap['key'] as String;
   }
+
+  @override
+  String toString() {
+    return 'CommonParams{pageName: $pageName, uniqueId: $uniqueId, arguments: $arguments, opaque: $opaque, key: $key}';
+  }
 }
 
 class StackInfo {

@@ -1,3 +1,5 @@
+import 'package:flutter_boost/logger.dart';
+
 import 'flutter_boost_app.dart';
 import 'messages.dart';
 
@@ -18,6 +20,8 @@ class BoostFlutterRouterApi extends FlutterRouterApi {
 
   @override
   void pushRoute(CommonParams arg) {
+    Logger.log(" native 打开 flutter 页面 arg=$arg");
+
     appState.push(arg.pageName,
         uniqueId: arg.uniqueId,
         arguments:

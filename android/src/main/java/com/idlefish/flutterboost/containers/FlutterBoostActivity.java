@@ -49,7 +49,7 @@ public class FlutterBoostActivity extends FlutterActivity implements FlutterView
     public void detachFromFlutterEngine() {
         /**
          * Override and do nothing.
-         * 
+         *
          * The idea here is to avoid releasing delegate when
          * a new FlutterActivity is attached in Flutter2.0.
          */
@@ -141,7 +141,7 @@ public class FlutterBoostActivity extends FlutterActivity implements FlutterView
 
     @Override
     public Map<String, Object> getUrlParams() {
-        return (HashMap<String, Object>)getIntent().getSerializableExtra(EXTRA_URL_PARAM);
+        return (HashMap<String, Object>) getIntent().getSerializableExtra(EXTRA_URL_PARAM);
     }
 
     @Override
@@ -154,7 +154,7 @@ public class FlutterBoostActivity extends FlutterActivity implements FlutterView
 
     @Override
     public String getCachedEngineId() {
-      return FlutterBoost.ENGINE_ID;
+        return FlutterBoost.ENGINE_ID;
     }
 
     public static class CachedEngineIntentBuilder {
@@ -187,7 +187,7 @@ public class FlutterBoostActivity extends FlutterActivity implements FlutterView
         }
 
         public FlutterBoostActivity.CachedEngineIntentBuilder urlParams(Map<String, Object> params) {
-            this.params = (params instanceof HashMap) ? (HashMap)params : new HashMap<String, Object>(params);
+            this.params = (params instanceof HashMap) ? (HashMap) params : new HashMap<String, Object>(params);
             return this;
         }
 
@@ -203,7 +203,7 @@ public class FlutterBoostActivity extends FlutterActivity implements FlutterView
                     .putExtra(EXTRA_BACKGROUND_MODE, backgroundMode)
                     .putExtra(EXTRA_URL, url)
                     .putExtra(EXTRA_URL_PARAM, params)
-                    .putExtra(EXTRA_UNIQUE_ID, uniqueId != null ? uniqueId : FlutterBoostUtils.createUniqueId(url));
+                    .putExtra(EXTRA_UNIQUE_ID, uniqueId != null ? uniqueId : FlutterBoostUtils.createUniqueId(url));//如果 是空的 就用UUID+路由替代
         }
     }
 

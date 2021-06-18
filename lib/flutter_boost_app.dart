@@ -110,6 +110,7 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
 
     // try to restore routes from host when hot restart.
     assert(() {
+      Logger.log("  initState assert");
       _restoreStackForHotRestart();
       return true;
     }());
@@ -119,6 +120,7 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
   ///Here,the [AppLifecycleState] is depends on the native container's num
   ///if container num >= 1,the state == [AppLifecycleState.resumed]
   ///else state == [AppLifecycleState.paused]
+  /// 如果有一个flutter页面就是 resumed ，一个都没有就是 paused ，依赖于原生容器数量 （FlutterContainerManager.instance().getContainerSize()）
   void _addAppLifecycleStateEventListener() {
     _lifecycleStateListenerRemover = BoostChannel.instance.addEventListener(_appLifecycleChangedKey, (key, arguments) {
       //we just deal two situation,resume and pause
@@ -128,10 +130,10 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
       final int index = arguments["lifecycleState"];
 
       if (index == AppLifecycleState.resumed.index) {
-        print("resume");
+        Logger.log("_addAppLifecycleStateEventListener resume");
         BoostFlutterBinding.instance.changeAppLifecycleState(AppLifecycleState.resumed);
       } else if (index == AppLifecycleState.paused.index) {
-        print("pause");
+        Logger.log("_addAppLifecycleStateEventListener pause");
         BoostFlutterBinding.instance.changeAppLifecycleState(AppLifecycleState.paused);
       }
       return;
@@ -262,8 +264,11 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
     return completer.future;
   }
 
+  //native
   void push(String pageName, {String uniqueId, Map<String, dynamic> arguments, bool withContainer}) {
+    Logger.log("  flutter 页面 pageName=$pageName uniqueId=$uniqueId");
     _cancelActivePointers();
+    //是否
     final existed = _findContainerByUniqueId(uniqueId);
     if (existed != null) {
       if (topContainer?.pageInfo?.uniqueId != uniqueId) {

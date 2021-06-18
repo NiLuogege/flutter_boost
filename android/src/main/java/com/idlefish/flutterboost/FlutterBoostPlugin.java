@@ -311,10 +311,14 @@ public class FlutterBoostPlugin implements FlutterPlugin, NativeRouterApi, Activ
 
     /**
      * 当 activity 或者 fragment resume 时会调用
+     *
      * @param container
      */
     public void onContainerAppeared(FlutterViewContainer container) {
         String uniqueId = container.getUniqueId();
+
+        Log.e(TAG, "onContainerAppeared 打开flutter 页面 uniqueId=" + uniqueId);
+
         //记录活跃的 FlutterViewContainer
         FlutterContainerManager.instance().activateContainer(uniqueId, container);
         //打开对应的flutter 页面
@@ -325,6 +329,7 @@ public class FlutterBoostPlugin implements FlutterPlugin, NativeRouterApi, Activ
 
     /**
      * 当 activity 或者 fragment onPause时会调用
+     *
      * @param container
      */
     public void onContainerDisappeared(FlutterViewContainer container) {
