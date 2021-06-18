@@ -148,6 +148,9 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
 
   @override
   Widget build(BuildContext context) {
+
+    Logger.log("FlutterBoostApp build");
+
     return widget.appBuilder(WillPopScope(
         onWillPop: () async {
           final canPop = topContainer.navigator.canPop();
@@ -268,11 +271,12 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
   void push(String pageName, {String uniqueId, Map<String, dynamic> arguments, bool withContainer}) {
     Logger.log("  flutter 页面 pageName=$pageName uniqueId=$uniqueId");
     _cancelActivePointers();
-    //是否已经有同一个页面加载过
+    //是否已经有同一个页面加载过 （这种情况一般不会出现 因为每个 contanner的 uniqueId 都不一样，除非我们指定了 uniqueId）
     final existed = _findContainerByUniqueId(uniqueId);
     Logger.log("  findContainerByUniqueId existed=$existed");
     if (existed != null) {
       if (topContainer?.pageInfo?.uniqueId != uniqueId) {
+        //这个操作应该是要把 existed 放到最新添加的位置
         containers.remove(existed);
         containers.add(existed);
 

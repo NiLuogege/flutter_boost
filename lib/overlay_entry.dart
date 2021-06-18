@@ -29,8 +29,7 @@ enum BoostSpecificEntryRefreshMode {
 ///              internal [OverlayEntry]
 ///[mode] : The [BoostSpecificEntryRefreshMode] you want to choose
 /// 刷新 BoostContainer 中的内容
-void refreshSpecificOverlayEntries(
-    BoostContainer container, BoostSpecificEntryRefreshMode mode) {
+void refreshSpecificOverlayEntries(BoostContainer container, BoostSpecificEntryRefreshMode mode) {
   //Get OverlayState from global key
   final overlayState = overlayKey.currentState;
   if (overlayState == null) {
@@ -43,7 +42,7 @@ void refreshSpecificOverlayEntries(
   //deal with different situation
   switch (mode) {
     case BoostSpecificEntryRefreshMode.add: // 添加
-    //床架你一个 OverlayEntry
+      //床架你一个 OverlayEntry
       final entry = _ContainerOverlayEntry(container);
       _lastEntries.add(entry);
       //添加一层 OverlayEntry
@@ -61,10 +60,12 @@ void refreshSpecificOverlayEntries(
         entryToRemove.remove();
       }
       break;
-    case BoostSpecificEntryRefreshMode.moveToTop: // 移到顶部
+    case BoostSpecificEntryRefreshMode.moveToTop: // 移到顶部，全栈唯一？？
+      // 找到已经存在的 OverlayEntry
       final existingEntry = _lastEntries.singleWhere((element) {
         return element.containerUniqueId == container.pageInfo.uniqueId;
       });
+      //删除并移动到顶部
       //remove the entry from list and overlay
       //and insert it to list'top and overlay 's top
       _lastEntries.remove(existingEntry);
@@ -95,14 +96,12 @@ void refreshAllOverlayEntries(List<BoostContainer> containers) {
 
   if (_lastEntries != null && _lastEntries.isNotEmpty) {
     for (var entry in _lastEntries) {
-      entry.remove();//移除所有  OverlayEntry
+      entry.remove(); //移除所有  OverlayEntry
     }
   }
 
-  _lastEntries = containers
-      .map<_ContainerOverlayEntry>(
-          (container) => _ContainerOverlayEntry(container))
-      .toList(growable: true);
+  _lastEntries =
+      containers.map<_ContainerOverlayEntry>((container) => _ContainerOverlayEntry(container)).toList(growable: true);
 
   final hasScheduledFrame = SchedulerBinding.instance.hasScheduledFrame;
   final framesEnabled = SchedulerBinding.instance.framesEnabled;
@@ -125,10 +124,7 @@ void refreshAllOverlayEntries(List<BoostContainer> containers) {
 class _ContainerOverlayEntry extends OverlayEntry {
   _ContainerOverlayEntry(BoostContainer container)
       : containerUniqueId = container.pageInfo.uniqueId,
-        super(
-            builder: (ctx) => BoostContainerWidget(container: container),
-            opaque: true,
-            maintainState: true);
+        super(builder: (ctx) => BoostContainerWidget(container: container), opaque: true, maintainState: true);
 
   ///This overlay's id,which is the same as the it's related container
   final String containerUniqueId;
