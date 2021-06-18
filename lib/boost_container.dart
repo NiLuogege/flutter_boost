@@ -142,6 +142,7 @@ class NavigatorExt extends Navigator {
   NavigatorState createState() => NavigatorExtState();
 }
 
+//当flutter 回退到flutter 的时候会走到这里，如果容器中只有一个flutter页面时 会直接关闭了
 class NavigatorExtState extends NavigatorState {
   @override
   void pop<T extends Object>([T result]) {

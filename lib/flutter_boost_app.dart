@@ -154,6 +154,7 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
     return widget.appBuilder(WillPopScope(
         onWillPop: () async {
           final canPop = topContainer.navigator.canPop();
+          Logger.log("FlutterBoostApp 要回退了 canPop=$canPop");
           if (canPop) {
             topContainer.navigator.pop();
             return true;
