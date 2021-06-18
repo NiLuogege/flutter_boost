@@ -262,7 +262,7 @@ public class FlutterBoost {
             this.isBackForegroundEventOverridden = isBackForegroundEventOverridden;
         }
 
-        //通知flutter侧 activity处于前台
+        //app处于前台的状态同步给 flutter侧
         private void dispatchForegroundEvent() {
             if (isBackForegroundEventOverridden) {
                 return;
@@ -272,7 +272,7 @@ public class FlutterBoost {
             FlutterBoost.instance().getPlugin().onForeground();
         }
 
-        //通知flutter侧 activity处于后台
+        //app处于后台的状态同步给 flutter侧
         private void dispatchBackgroundEvent() {
             if (isBackForegroundEventOverridden) {
                 return;

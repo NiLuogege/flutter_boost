@@ -3,7 +3,6 @@ import 'package:flutter/scheduler.dart';
 import 'logger.dart';
 
 /// 这里 处理了 flutter app 生命周期相关
-// ignore: public_member_api_docs
 mixin BoostFlutterBinding on WidgetsFlutterBinding {
   bool _appLifecycleStateLocked = true;
 
@@ -11,6 +10,7 @@ mixin BoostFlutterBinding on WidgetsFlutterBinding {
   void initInstances() {
     super.initInstances();
     _instance = this;
+    //告诉flutter 体统 APP resumed
     changeAppLifecycleState(AppLifecycleState.resumed);
   }
 

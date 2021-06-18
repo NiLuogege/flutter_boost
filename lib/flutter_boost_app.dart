@@ -69,7 +69,7 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
   BoostContainer get topContainer => containers.last;
 
   NativeRouterApi get nativeRouterApi => _nativeRouterApi;
-  NativeRouterApi _nativeRouterApi;//flutter 调用 native的 channel
+  NativeRouterApi _nativeRouterApi; //flutter 调用 native的 channel
 
   BoostFlutterRouterApi get boostFlutterRouterApi => _boostFlutterRouterApi;
   BoostFlutterRouterApi _boostFlutterRouterApi;
@@ -88,8 +88,10 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
         'BoostFlutterBinding is not initialized，'
         'please refer to "class CustomFlutterBinding" in example project');
 
-    //将native侧的 contanner 信息存储到 _containers 中
+    //将初始路由信息装入 _containers 中 默认为路由为 /
     _containers.add(_createContainer(PageInfo(pageName: widget.initialRoute)));
+    Logger.log("  containers=$containers");
+
     //初始化 NativeRouterApi (flutter 调用原生)
     _nativeRouterApi = NativeRouterApi();
     // 初始化 BoostFlutterRouterApi (原生调用flutter)
@@ -101,6 +103,7 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
     // overlayKey.currentState to load complete....
     // 刷新页面以显示 初始化路由对应的页面
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      Logger.log("  initState addPostFrameCallback");
       refresh();
       _addAppLifecycleStateEventListener();
     });
@@ -178,6 +181,8 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
 
   //刷新页面
   void refresh() {
+    Logger.log("FlutterBoostApp refresh  containers=$containers");
+
     refreshAllOverlayEntries(containers);
 
     // try to save routes to host.

@@ -16,18 +16,14 @@ class BoostLifecycleBinding {
   /// dispatching [containerDidShow] event
   Set<String> hasShownPageIds = <String>{};
 
-  void containerDidPush(
-      BoostContainer container, BoostContainer previousContainer) {
+  void containerDidPush(BoostContainer container, BoostContainer previousContainer) {
     Logger.log('boost_lifecycle: BoostLifecycleBinding.containerDidPush');
-    PageVisibilityBinding.instance
-        .dispatchPagePushEvent(container.topPage.route);
+    PageVisibilityBinding.instance.dispatchPagePushEvent(container.topPage.route);
   }
 
-  void containerDidPop(
-      BoostContainer container, BoostContainer previousContainer) {
+  void containerDidPop(BoostContainer container, BoostContainer previousContainer) {
     Logger.log('boost_lifecycle: BoostLifecycleBinding.containerDidPop');
-    PageVisibilityBinding.instance
-        .dispatchPagePopEvent(container.topPage.route);
+    PageVisibilityBinding.instance.dispatchPagePopEvent(container.topPage.route);
 
     // When container pop,remove the id from set to avoid
     // this id still remain in the set
@@ -47,25 +43,21 @@ class BoostLifecycleBinding {
       // So we should dispatch event using
       // PageVisibilityBinding.dispatchPageShowEventOnPageShowFirstTime
       // to ensure the page will receive callback
-      PageVisibilityBinding.instance
-          .dispatchPageShowEventOnPageShowFirstTime(container.topPage.route);
+      PageVisibilityBinding.instance.dispatchPageShowEventOnPageShowFirstTime(container.topPage.route);
     } else {
-      PageVisibilityBinding.instance
-          .dispatchPageShowEvent(container.topPage.route);
+      PageVisibilityBinding.instance.dispatchPageShowEvent(container.topPage.route);
     }
   }
 
   void containerDidHide(BoostContainer container) {
     Logger.log('boost_lifecycle: BoostLifecycleBinding.containerDidHide');
-    PageVisibilityBinding.instance
-        .dispatchPageHideEvent(container?.topPage?.route);
+    PageVisibilityBinding.instance.dispatchPageHideEvent(container?.topPage?.route);
   }
 
   void routeDidPush(Route<dynamic> route, Route<dynamic> previousRoute) {
     Logger.log('boost_lifecycle: BoostLifecycleBinding.routeDidPush');
     PageVisibilityBinding.instance.dispatchPagePushEvent(route);
-    PageVisibilityBinding.instance
-        .dispatchPageShowEventOnPageShowFirstTime(route);
+    PageVisibilityBinding.instance.dispatchPageShowEventOnPageShowFirstTime(route);
     PageVisibilityBinding.instance.dispatchPageHideEvent(previousRoute);
   }
 
@@ -82,14 +74,12 @@ class BoostLifecycleBinding {
   }
 
   void appDidEnterForeground(BoostContainer container) {
-    Logger.log('boost_lifecycle: BoostLifecycleBinding.appDidEnterForeground');
-    PageVisibilityBinding.instance
-        .dispatchPageForgroundEvent(container.topPage.route);
+    Logger.log('boost_lifecycle: BoostLifecycleBinding.appDidEnterForeground  container$container');
+    PageVisibilityBinding.instance.dispatchPageForgroundEvent(container.topPage.route);
   }
 
   void appDidEnterBackground(BoostContainer container) {
-    Logger.log('boost_lifecycle: BoostLifecycleBinding.appDidEnterBackground');
-    PageVisibilityBinding.instance
-        .dispatchPageBackgroundEvent(container.topPage.route);
+    Logger.log('boost_lifecycle: BoostLifecycleBinding.appDidEnterBackground  container$container');
+    PageVisibilityBinding.instance.dispatchPageBackgroundEvent(container.topPage.route);
   }
 }

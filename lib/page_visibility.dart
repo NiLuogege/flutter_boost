@@ -3,7 +3,10 @@ import 'package:flutter/scheduler.dart';
 
 import 'logger.dart';
 
+/// 用于处理 页面 显示 、隐藏 、 push 、pop、进入前台 ，退到后台 的 事件回调
+
 ///Observer for all pages visibility
+/// 整体页面事件回调
 class GlobalPageVisibilityObserver {
   void onPagePush(Route<dynamic> route) {}
 
@@ -19,6 +22,7 @@ class GlobalPageVisibilityObserver {
 }
 
 ///Observer for single page visibility
+/// 单个页面事件回调
 class PageVisibilityObserver {
   ///
   /// Tip:If you want to do things when page is created,
@@ -46,10 +50,12 @@ class PageVisibilityBinding {
   static final PageVisibilityBinding instance = PageVisibilityBinding._();
 
   ///listeners for single page event
+  /// 监听单个页面事件
   final Map<Route<dynamic>, Set<PageVisibilityObserver>> _listeners =
       <Route<dynamic>, Set<PageVisibilityObserver>>{};
 
   ///listeners for all pages event
+  /// 监听整体页面事件
   final Set<GlobalPageVisibilityObserver> _globalListeners =
       <GlobalPageVisibilityObserver>{};
 
@@ -65,6 +71,7 @@ class PageVisibilityBinding {
   }
 
   /// Unregisters the given observer.
+  /// 添加单个页面事件监听
   void removeObserver(PageVisibilityObserver observer) {
     assert(observer != null);
     for (final route in _listeners.keys) {
@@ -75,6 +82,7 @@ class PageVisibilityBinding {
   }
 
   ///Register [observer] to [_globalListeners] set
+  ///添加整体页面事件监听
   void addGlobalObserver(GlobalPageVisibilityObserver observer) {
     assert(observer != null);
     _globalListeners.add(observer);
@@ -147,6 +155,7 @@ class PageVisibilityBinding {
     dispatchGlobalPageHideEvent(route);
   }
 
+  /// pop 事件 回调
   void dispatchPagePopEvent(Route<dynamic> route) {
     if (route == null) {
       return;
@@ -156,6 +165,7 @@ class PageVisibilityBinding {
     dispatchGlobalPagePopEvent(route);
   }
 
+  /// 分发 ForgroundEvent PageVisibilityObserver 和 GlobalPageVisibilityObserver 都会被回调
   void dispatchPageForgroundEvent(Route<dynamic> route) {
     if (route == null) {
       return;
@@ -178,6 +188,7 @@ class PageVisibilityBinding {
     dispatchGlobalForgroundEvent(route);
   }
 
+  /// 分发 ackgroundEvent PageVisibilityObserver 和 GlobalPageVisibilityObserver 都会被回调
   void dispatchPageBackgroundEvent(Route<dynamic> route) {
     if (route == null) {
       return;

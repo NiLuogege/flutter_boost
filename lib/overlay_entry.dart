@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_boost/logger.dart';
 
 import 'boost_container.dart';
 
@@ -81,8 +82,8 @@ void refreshSpecificOverlayEntries(
 void refreshAllOverlayEntries(List<BoostContainer> containers) {
   final overlayState = overlayKey.currentState;
 
-  print('refreshAllOverlayEntries overlayState=$overlayState');
-  print('refreshAllOverlayEntries _lastEntries=$_lastEntries');
+  Logger.log('refreshAllOverlayEntries overlayState=$overlayState');
+  Logger.log('refreshAllOverlayEntries _lastEntries=$_lastEntries');
 
   if (overlayState == null) {
     return;
