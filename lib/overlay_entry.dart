@@ -79,6 +79,9 @@ void refreshSpecificOverlayEntries(
 ///Refresh all of overlayEntries
 void refreshAllOverlayEntries(List<BoostContainer> containers) {
   final overlayState = overlayKey.currentState;
+
+  print('refreshAllOverlayEntries overlayState=$overlayState');
+
   if (overlayState == null) {
     return;
   }

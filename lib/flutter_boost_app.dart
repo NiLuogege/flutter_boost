@@ -60,7 +60,7 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
 
   List<BoostContainer> get containers => _containers;
 
-  //BoostContainer 的 缓存
+  //BoostContainer 的 缓存 （存储的是  native侧容器的信息）
   final List<BoostContainer> _containers = <BoostContainer>[];
 
   /// All interceptors from widget
@@ -88,6 +88,7 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
         'BoostFlutterBinding is not initialized，'
         'please refer to "class CustomFlutterBinding" in example project');
 
+    //将native侧的 contanner 信息存储到 _containers 中
     _containers.add(_createContainer(PageInfo(pageName: widget.initialRoute)));
     //初始化 NativeRouterApi (flutter 调用原生)
     _nativeRouterApi = NativeRouterApi();
