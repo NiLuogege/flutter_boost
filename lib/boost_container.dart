@@ -6,6 +6,7 @@ import 'boost_navigator.dart';
 import 'flutter_boost_app.dart';
 import 'logger.dart';
 
+//flutter 侧的页面容器，页面内容就是 添加到这个里面的  ,也就是 一个  BoostPage 对应一个 BoostContainer
 class BoostContainer {
   BoostContainer({this.key, this.pageInfo}) {
 
