@@ -30,7 +30,10 @@ class BoostFlutterRouterApi extends FlutterRouterApi {
   }
 
   @override
-  void popRoute(CommonParams arg) => appState.pop(uniqueId: arg.uniqueId);
+  void popRoute(CommonParams arg){
+    Logger.log("关闭页面喽");
+    appState.pop(uniqueId: arg.uniqueId);
+  }
 
   @override
   void onForeground(CommonParams arg) => appState.onForeground();

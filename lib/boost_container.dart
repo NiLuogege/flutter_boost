@@ -9,7 +9,6 @@ import 'logger.dart';
 //flutter 侧的页面容器，页面内容就是 添加到这个里面的  ,也就是 一个  BoostPage 对应一个 BoostContainer
 class BoostContainer {
   BoostContainer({this.key, this.pageInfo}) {
-
     //PageInfo 转换为 BoostPage 并添加到 pages 中
     pages.add(BoostPage.create(pageInfo));
   }
@@ -44,18 +43,15 @@ class BoostContainer {
   VoidCallback _refreshListener; //就是个刷新方法
 
   @override
-  String toString() =>
-      '${objectRuntimeType(this, 'BoostContainer')}(name:${pageInfo.pageName},'
+  String toString() => '${objectRuntimeType(this, 'BoostContainer')}(name:${pageInfo.pageName},'
       ' pages:$pages)';
 }
-
 
 /// BoostContainerWidget 整体是为了 接管flutter 系统的导航，
 // ignore: public_member_api_docs
 class BoostContainerWidget extends StatefulWidget {
   // ignore: public_member_api_docs
-  BoostContainerWidget({LocalKey key, this.container})
-      : super(key: container.key);
+  BoostContainerWidget({LocalKey key, this.container}) : super(key: container.key);
 
   final BoostContainer container;
 
@@ -67,8 +63,7 @@ class BoostContainerWidget extends StatefulWidget {
   bool operator ==(Object other) {
     if (other is BoostContainerWidget) {
       var otherWidget = other;
-      return container.pageInfo.uniqueId ==
-          otherWidget.container.pageInfo.uniqueId;
+      return container.pageInfo.uniqueId == otherWidget.container.pageInfo.uniqueId;
     }
     return super == other;
   }
@@ -115,6 +110,7 @@ class BoostContainerState extends State<BoostContainerWidget> {
           key: widget.container._navKey,
           pages: List<Page<dynamic>>.of(widget.container.pages),
           onPopPage: (route, result) {
+            Logger.log("onPopPage route$route result$result");
             if (route.didPop(result)) {
               _updatePagesList();
               return true;
@@ -140,8 +136,7 @@ class NavigatorExt extends Navigator {
     List<Page<dynamic>> pages,
     PopPageCallback onPopPage,
     List<NavigatorObserver> observers,
-  }) : super(
-            key: key, pages: pages, onPopPage: onPopPage, observers: observers);
+  }) : super(key: key, pages: pages, onPopPage: onPopPage, observers: observers);
 
   @override
   NavigatorState createState() => NavigatorExtState();
@@ -151,6 +146,7 @@ class NavigatorExtState extends NavigatorState {
   @override
   void pop<T extends Object>([T result]) {
     // Taking over container page
+    Logger.log("NavigatorExtState canPop=${canPop()}");
     if (!canPop()) {
       BoostNavigator.instance.pop(result);
     } else {

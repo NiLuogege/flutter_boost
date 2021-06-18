@@ -314,6 +314,7 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
   }
 
   Future<bool> popWithResult<T extends Object>([T result]) async {
+    Logger.log("popWithResult");
     final uniqueId = topContainer?.topPage?.pageInfo?.uniqueId;
     _completePendingResultIfNeeded(uniqueId, result: result);
 
@@ -322,6 +323,7 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
   }
 
   void removeWithResult([String uniqueId, Map<String, dynamic> result]) {
+    Logger.log("removeWithResult");
     _completePendingResultIfNeeded(uniqueId, result: result);
     pop(uniqueId: uniqueId, arguments: result);
   }
