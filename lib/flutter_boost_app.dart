@@ -297,6 +297,7 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
     final uniqueId = topContainer?.topPage?.pageInfo?.uniqueId;
     _completePendingResultIfNeeded(uniqueId, result: result);
 
+    // ignore: lines_longer_than_80_chars
     return await (result is Map<String, dynamic> ? pop(arguments: result) : pop());
   }
 
@@ -305,14 +306,17 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
     pop(uniqueId: uniqueId, arguments: result);
   }
 
+  //pop 并传递参数
   Future<bool> pop({String uniqueId, Map<String, dynamic> arguments}) async {
     BoostContainer container;
     if (uniqueId != null) {
+      //通过 uniqueId 找到 container
       container = _findContainerByUniqueId(uniqueId);
       if (container == null) {
         Logger.error('uniqueId=$uniqueId not found');
         return false;
       }
+      //如果不是顶层页面直接移除
       if (container != topContainer) {
         await _removeContainer(container);
         return true;
@@ -320,6 +324,8 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
     } else {
       container = topContainer;
     }
+
+    //下面是移除顶层页面的操作
 
     final currentPage = topContainer?.topPage?.pageInfo?.uniqueId;
     assert(currentPage != null);
@@ -330,7 +336,9 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
     // 2.If uniqueId is topPage's uniqueId, so we navigator?.maybePop();
     // 3.If uniqueId is not topPage's uniqueId, so we will remove an existing
     // page in container.
+    // ignore: lines_longer_than_80_chars
     if (uniqueId == null || uniqueId == container.pages.last.pageInfo.uniqueId) {
+      //先调用flutter的pop
       final handled = await container?.navigator?.maybePop();
       if (handled != null && !handled) {
         assert(container.pageInfo.withContainer);
@@ -353,6 +361,7 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
     return true;
   }
 
+  //移除原生的 容器页面
   Future<void> _removeContainer(BoostContainer container) async {
     if (container.pageInfo.withContainer) {
       Logger.log('_removeContainer ,  uniqueId=${container.pageInfo.uniqueId}');

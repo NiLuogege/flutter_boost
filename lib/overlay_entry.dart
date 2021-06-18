@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 
 import 'boost_container.dart';
 
+//保存了全局的 OverlayState
 final GlobalKey<OverlayState> overlayKey = GlobalKey<OverlayState>();
 List<_ContainerOverlayEntry> _lastEntries = <_ContainerOverlayEntry>[];
 
@@ -81,6 +82,7 @@ void refreshAllOverlayEntries(List<BoostContainer> containers) {
   final overlayState = overlayKey.currentState;
 
   print('refreshAllOverlayEntries overlayState=$overlayState');
+  print('refreshAllOverlayEntries _lastEntries=$_lastEntries');
 
   if (overlayState == null) {
     return;
@@ -88,7 +90,7 @@ void refreshAllOverlayEntries(List<BoostContainer> containers) {
 
   if (_lastEntries != null && _lastEntries.isNotEmpty) {
     for (var entry in _lastEntries) {
-      entry.remove();
+      entry.remove();//移除所有  OverlayEntry
     }
   }
 
@@ -100,8 +102,11 @@ void refreshAllOverlayEntries(List<BoostContainer> containers) {
   final hasScheduledFrame = SchedulerBinding.instance.hasScheduledFrame;
   final framesEnabled = SchedulerBinding.instance.framesEnabled;
 
+  // ignore: lines_longer_than_80_chars
+  //将所有 container 都封装为一个  _ContainerOverlayEntry（就是 OverlayEntry） 然后加到 overlayState 中？？？？
   overlayState.insertAll(_lastEntries);
 
+  // 下面代码是为了 解决bug
   // https://github.com/alibaba/flutter_boost/issues/1056
   // Ensure this frame is refreshed after schedule frame，
   // otherwise the PageState.dispose may not be called
@@ -110,6 +115,7 @@ void refreshAllOverlayEntries(List<BoostContainer> containers) {
   }
 }
 
+//每个 _ContainerOverlayEntry 都包含一个 BoostContainerWidget
 class _ContainerOverlayEntry extends OverlayEntry {
   _ContainerOverlayEntry(BoostContainer container)
       : containerUniqueId = container.pageInfo.uniqueId,

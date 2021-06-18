@@ -30,13 +30,14 @@ class BoostContainer {
   NavigatorState get navigator => _navKey.currentState;
   final GlobalKey<NavigatorState> _navKey = GlobalKey<NavigatorState>();
 
+  //执行刷新操作 其实就是调用了 BoostContainerState 的 setState 方法
   void refresh() {
     if (_refreshListener != null) {
       _refreshListener();
     }
   }
 
-  VoidCallback _refreshListener;
+  VoidCallback _refreshListener; //就是个刷新方法
 
   @override
   String toString() =>
@@ -44,7 +45,11 @@ class BoostContainer {
       ' pages:$pages)';
 }
 
+
+/// BoostContainerWidget 整体是为了 接管flutter 系统的导航，
+// ignore: public_member_api_docs
 class BoostContainerWidget extends StatefulWidget {
+  // ignore: public_member_api_docs
   BoostContainerWidget({LocalKey key, this.container})
       : super(key: container.key);
 
@@ -97,6 +102,7 @@ class BoostContainerState extends State<BoostContainerWidget> {
 
   @override
   Widget build(BuildContext context) {
+    //HeroControllerScope 要求只能有一个 navigator（导航器）
     return HeroControllerScope(
         controller: HeroController(),
         child: NavigatorExt(
