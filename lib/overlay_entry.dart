@@ -103,7 +103,8 @@ void refreshAllOverlayEntries(List<BoostContainer> containers) {
   final hasScheduledFrame = SchedulerBinding.instance.hasScheduledFrame;
   final framesEnabled = SchedulerBinding.instance.framesEnabled;
 
-  // ignore: lines_longer_than_80_chars
+  Logger.log('refreshAllOverlayEntries new _lastEntries=$_lastEntries');
+
   //将所有 container 都封装为一个  _ContainerOverlayEntry（就是 OverlayEntry） 然后加到 overlayState 中？？？？
   overlayState.insertAll(_lastEntries);
 

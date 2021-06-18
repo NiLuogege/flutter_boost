@@ -4,9 +4,12 @@ import 'package:flutter/widgets.dart';
 
 import 'boost_navigator.dart';
 import 'flutter_boost_app.dart';
+import 'logger.dart';
 
 class BoostContainer {
   BoostContainer({this.key, this.pageInfo}) {
+
+    //PageInfo 转换为 BoostPage 并添加到 pages 中
     pages.add(BoostPage.create(pageInfo));
   }
 
@@ -102,6 +105,8 @@ class BoostContainerState extends State<BoostContainerWidget> {
 
   @override
   Widget build(BuildContext context) {
+    Logger.log("BoostContainerState pages=${widget.container.pages}");
+
     //HeroControllerScope 要求只能有一个 navigator（导航器）
     return HeroControllerScope(
         controller: HeroController(),

@@ -51,11 +51,9 @@ class FlutterBoostApp extends StatefulWidget {
   State<StatefulWidget> createState() => FlutterBoostAppState();
 }
 
-// ignore: public_member_api_docs
 class FlutterBoostAppState extends State<FlutterBoostApp> {
   static const String _appLifecycleChangedKey = "app_lifecycle_changed_key";
 
-  // ignore: lines_longer_than_80_chars
   final Map<String, Completer<Object>> _pendingResult = <String, Completer<Object>>{};
 
   List<BoostContainer> get containers => _containers;
@@ -204,6 +202,7 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
     return BoostContainer(key: ValueKey<String>(pageInfo.uniqueId), pageInfo: pageInfo);
   }
 
+  /// 保存StackInfo 到 native端
   Future<void> _saveStackForHotRestart() async {
     final stack = StackInfo();
     stack.containers = <String>[];

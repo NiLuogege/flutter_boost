@@ -4,6 +4,8 @@ import 'boost_container.dart';
 import 'logger.dart';
 import 'page_visibility.dart';
 
+/// 用于处理 页面 显示 、隐藏 、 push 、pop、进入前台 ，退到后台 的 事件回调
+/// 真的处理的是 PageVisibilityBinding
 class BoostLifecycleBinding {
   BoostLifecycleBinding._();
 
