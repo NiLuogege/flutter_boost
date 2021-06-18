@@ -105,7 +105,7 @@ void refreshAllOverlayEntries(List<BoostContainer> containers) {
 
   Logger.log('refreshAllOverlayEntries new _lastEntries=$_lastEntries');
 
-  //将所有 container 都封装为一个  _ContainerOverlayEntry（就是 OverlayEntry） 然后加到 overlayState 中？？？？
+  //将所有 container 都封装为一个  _ContainerOverlayEntry（就是 OverlayEntry） 然后加到 overlayState
   overlayState.insertAll(_lastEntries);
 
   // 下面代码是为了 解决bug
