@@ -268,8 +268,9 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
   void push(String pageName, {String uniqueId, Map<String, dynamic> arguments, bool withContainer}) {
     Logger.log("  flutter 页面 pageName=$pageName uniqueId=$uniqueId");
     _cancelActivePointers();
-    //是否
+    //是否已经有同一个页面加载过
     final existed = _findContainerByUniqueId(uniqueId);
+    Logger.log("  findContainerByUniqueId existed=$existed");
     if (existed != null) {
       if (topContainer?.pageInfo?.uniqueId != uniqueId) {
         containers.remove(existed);
@@ -279,15 +280,21 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
         refreshOnMoveToTop(existed);
       }
     } else {
+      //创建pageInfo
       final pageInfo = PageInfo(
           pageName: pageName,
           uniqueId: uniqueId ?? _createUniqueId(pageName),
           arguments: arguments,
           withContainer: withContainer);
       if (withContainer) {
+        //创建contanner BoostContainer
         final container = _createContainer(pageInfo);
+        //记录上一个页面
         final previousContainer = topContainer;
+        //新创建的 container 缓存起来
         containers.add(container);
+
+        //notify containerDidPush 事件给所有监听
         BoostLifecycleBinding.instance.containerDidPush(container, previousContainer);
 
         // Add a new overlay entry with this container
@@ -544,6 +551,7 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
   ///
 
   void refreshOnPush(BoostContainer container) {
+    //将页面 push 到 Overlay 中
     refreshSpecificOverlayEntries(container, BoostSpecificEntryRefreshMode.add);
     assert(() {
       _saveStackForHotRestart();

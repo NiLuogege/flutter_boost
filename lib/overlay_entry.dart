@@ -8,6 +8,7 @@ import 'boost_container.dart';
 
 //保存了全局的 OverlayState
 final GlobalKey<OverlayState> overlayKey = GlobalKey<OverlayState>();
+// OverlayEntry(所有页面) 的栈？
 List<_ContainerOverlayEntry> _lastEntries = <_ContainerOverlayEntry>[];
 
 ///The Entry refresh mode,which indicates different situation
@@ -27,6 +28,7 @@ enum BoostSpecificEntryRefreshMode {
 ///[container] : The container you want to operate, it is related with
 ///              internal [OverlayEntry]
 ///[mode] : The [BoostSpecificEntryRefreshMode] you want to choose
+/// 刷新 BoostContainer 中的内容
 void refreshSpecificOverlayEntries(
     BoostContainer container, BoostSpecificEntryRefreshMode mode) {
   //Get OverlayState from global key
@@ -40,12 +42,14 @@ void refreshSpecificOverlayEntries(
 
   //deal with different situation
   switch (mode) {
-    case BoostSpecificEntryRefreshMode.add:
+    case BoostSpecificEntryRefreshMode.add: // 添加
+    //床架你一个 OverlayEntry
       final entry = _ContainerOverlayEntry(container);
       _lastEntries.add(entry);
+      //添加一层 OverlayEntry
       overlayState.insert(entry);
       break;
-    case BoostSpecificEntryRefreshMode.remove:
+    case BoostSpecificEntryRefreshMode.remove: // 移除
       if (_lastEntries.isNotEmpty) {
         //Find the entry matching the container
         final entryToRemove = _lastEntries.singleWhere((element) {
@@ -57,7 +61,7 @@ void refreshSpecificOverlayEntries(
         entryToRemove.remove();
       }
       break;
-    case BoostSpecificEntryRefreshMode.moveToTop:
+    case BoostSpecificEntryRefreshMode.moveToTop: // 移到顶部
       final existingEntry = _lastEntries.singleWhere((element) {
         return element.containerUniqueId == container.pageInfo.uniqueId;
       });
