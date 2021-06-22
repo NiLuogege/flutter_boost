@@ -14,8 +14,10 @@ import 'package:flutter_boost_example/simple_page_widgets.dart';
 import 'package:flutter_boost_example/tab/simple_widget.dart';
 
 void main() {
+  // 监听页面路由及app生命周期
   PageVisibilityBinding.instance
       .addGlobalObserver(AppGlobalPageVisibilityObserver());
+  //初始化 CustomFlutterBinding
   CustomFlutterBinding();
   runApp(MyApp());
 }
@@ -58,6 +60,8 @@ class AppGlobalPageVisibilityObserver extends GlobalPageVisibilityObserver {
   }
 }
 
+// 这里创建自定义的 WidgetsFlutterBinding 并混入  BoostFlutterBinding 对生命周期做一些管理
+// FlutterBoostApp 中会用到
 class CustomFlutterBinding extends WidgetsFlutterBinding with BoostFlutterBinding {
 
 }
