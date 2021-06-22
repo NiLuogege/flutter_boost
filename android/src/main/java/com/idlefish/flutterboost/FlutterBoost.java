@@ -76,6 +76,8 @@ public class FlutterBoost {
         FlutterEngine engine = getEngine();
         if (engine == null) {//没有获取到就创建一个 并缓存到 FlutterEngineCache 中
             engine = new FlutterEngine(application, options.shellArgs());
+            //这里缓存 id 为 ENGINE_ID 的 FlutterEngin,后面会在 FlutterBoostActivity or FlutterBoostFragment中通过
+            //id 找到这个 FlutterEngin 达到FlutterEngin 复用的效果
             FlutterEngineCache.getInstance().put(ENGINE_ID, engine);
         }
 

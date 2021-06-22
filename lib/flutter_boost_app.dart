@@ -99,7 +99,7 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
     // Refresh the containers data to overlayKey to show the page matching
     // initialRoute. Use addPostFrameCallback is because to wait
     // overlayKey.currentState to load complete....
-    // 刷新页面以显示 初始化路由对应的页面
+    // 下一帧来临时 刷新页面以显示 初始化路由对应的页面
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Logger.log("  initState addPostFrameCallback");
       //刷新页面
@@ -167,7 +167,7 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
             onPointerDown: _handlePointerDown,
             onPointerUp: _handlePointerUpOrCancel,
             onPointerCancel: _handlePointerUpOrCancel,
-            child: Overlay(
+            child: Overlay(//所有 的 flutter 页面都会加到 这个 Overlay
               key: overlayKey,
               initialEntries: const <OverlayEntry>[],
             ))));

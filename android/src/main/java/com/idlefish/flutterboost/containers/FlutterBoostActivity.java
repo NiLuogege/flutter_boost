@@ -152,6 +152,9 @@ public class FlutterBoostActivity extends FlutterActivity implements FlutterView
         return getIntent().getStringExtra(EXTRA_UNIQUE_ID);
     }
 
+    /**
+     * 这里返回 ENGINE_ID ，就会达到FlutterEngin 的 复用效果
+     */
     @Override
     public String getCachedEngineId() {
         return FlutterBoost.ENGINE_ID;
