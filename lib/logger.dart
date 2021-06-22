@@ -5,11 +5,11 @@ class Logger {
   static var logger = Log.Logger(printer: Log.PrettyPrinter());
 
   static void log(String msg) {
-    logger.e('FlutterBoost#$msg');
+    logger.e('$msg');
   }
 
   static void error(String msg) {
     // print('FlutterBoost#$msg');
-    logger.e('FlutterBoost#$msg');
+    logger.e('$msg');
   }
 }

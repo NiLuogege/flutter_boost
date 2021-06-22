@@ -364,9 +364,15 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
     // 3.If uniqueId is not topPage's uniqueId, so we will remove an existing
     // page in container.
     // ignore: lines_longer_than_80_chars
+
+    Logger.log('pop ,uniqueId=$uniqueId  container.pages.last.pageInfo.uniqueId=${container.pages.last.pageInfo.uniqueId} container.pages=${container.pages}');
+
     if (uniqueId == null || uniqueId == container.pages.last.pageInfo.uniqueId) {
-      //先调用flutter的pop
+      //先调用flutter navigator 的pop
       final handled = await container?.navigator?.maybePop();
+
+      Logger.log('pop maybePop=$handled');
+
       if (handled != null && !handled) {
         assert(container.pageInfo.withContainer);
         final params = CommonParams()
@@ -381,6 +387,7 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
         return element.pageInfo.uniqueId == uniqueId;
       });
 
+      //刷新页面
       container.refresh();
     }
 

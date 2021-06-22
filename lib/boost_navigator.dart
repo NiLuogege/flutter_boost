@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/widgets.dart';
+import 'package:flutter_boost/flutter_boost.dart';
 
 import 'boost_container.dart';
 import 'boost_interceptor.dart';
@@ -119,8 +120,10 @@ class BoostNavigator {
   }
 
   /// Pop the top-most page off the hybrid stack.
-  Future<bool> pop<T extends Object>([T result]) async =>
-      await appState.popWithResult(result);
+  Future<bool> pop<T extends Object>([T result]) async {
+    Logger.log("flutter 侧 navigator pop");
+    return await appState.popWithResult(result);
+  }
 
   /// Remove the page with the given [uniqueId] from hybrid stack.
   ///
