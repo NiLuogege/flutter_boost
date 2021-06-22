@@ -42,7 +42,7 @@ void refreshSpecificOverlayEntries(BoostContainer container, BoostSpecificEntryR
   //deal with different situation
   switch (mode) {
     case BoostSpecificEntryRefreshMode.add: // 添加
-      //床架你一个 OverlayEntry
+      //创建一个 OverlayEntry
       final entry = _ContainerOverlayEntry(container);
       _lastEntries.add(entry);
       //添加一层 OverlayEntry

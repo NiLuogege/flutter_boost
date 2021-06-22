@@ -57,6 +57,11 @@ class StackInfo {
       ..containers = pigeonMap['containers'] as List<Object>
       ..routes = pigeonMap['routes'] as Map<Object, Object>;
   }
+
+  @override
+  String toString() {
+    return 'StackInfo{containers: $containers, routes: $routes}';
+  }
 }
 
 abstract class FlutterRouterApi {

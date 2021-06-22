@@ -31,7 +31,7 @@ public class FlutterBoostPlugin implements FlutterPlugin, NativeRouterApi, Activ
     private FlutterEngine engine;
     private FlutterRouterApi channel;//原生调用 flutter的 channel
     private FlutterBoostDelegate delegate;
-    private StackInfo dartStack;
+    private StackInfo dartStack;//flutter页面栈信息
     private SparseArray<String> pageNames;
     private int requestCode = 1000;
 

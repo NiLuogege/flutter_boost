@@ -111,6 +111,7 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
     //setup the AppLifecycleState change event launched from native
 
     // try to restore routes from host when hot restart.
+    // 当热重启是恢复 flutter 页面栈，热重启指的是（退到后台后再打开么？？）
     assert(() {
       Logger.log("  initState assert");
       _restoreStackForHotRestart();
@@ -150,7 +151,6 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
 
   @override
   Widget build(BuildContext context) {
-
     Logger.log("FlutterBoostApp build");
 
     return widget.appBuilder(WillPopScope(
@@ -167,7 +167,8 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
             onPointerDown: _handlePointerDown,
             onPointerUp: _handlePointerUpOrCancel,
             onPointerCancel: _handlePointerUpOrCancel,
-            child: Overlay(//所有 的 flutter 页面都会加到 这个 Overlay
+            child: Overlay(
+              //所有 的 flutter 页面都会加到 这个 Overlay
               key: overlayKey,
               initialEntries: const <OverlayEntry>[],
             ))));
@@ -210,7 +211,7 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
     return BoostContainer(key: ValueKey<String>(pageInfo.uniqueId), pageInfo: pageInfo);
   }
 
-  /// 保存StackInfo 到 native端
+  /// flutter 页面栈信息 同步 到 native端
   Future<void> _saveStackForHotRestart() async {
     final stack = StackInfo();
     stack.containers = <String>[];
@@ -227,6 +228,7 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
       }
       stack.routes[container.pageInfo.uniqueId] = params;
     }
+    Logger.log('_saveStackForHotRestart, stack=$stack');
     await nativeRouterApi.saveStackToHost(stack);
     Logger.log('_saveStackForHotRestart, ${stack?.containers}, ${stack?.routes}');
   }
@@ -304,7 +306,7 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
         //notify containerDidPush 事件给所有监听
         BoostLifecycleBinding.instance.containerDidPush(container, previousContainer);
 
-        // Add a new overlay entry with this container
+        // 添加新页面
         refreshOnPush(container);
       } else {
         // In this case , we don't need to change the overlayEntries data,
