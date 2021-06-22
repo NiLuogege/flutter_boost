@@ -12,6 +12,9 @@ mixin BoostFlutterBinding on WidgetsFlutterBinding {
     _instance = this;
     //告诉flutter 体统 APP resumed
     changeAppLifecycleState(AppLifecycleState.resumed);
+
+    Logger.log('BoostFlutterBinding  initInstances');
+
   }
 
   static BoostFlutterBinding get instance => _instance;
@@ -19,6 +22,8 @@ mixin BoostFlutterBinding on WidgetsFlutterBinding {
 
   @override
   void handleAppLifecycleStateChanged(AppLifecycleState state) {
+    Logger.log('BoostFlutterBinding  handleAppLifecycleStateChanged');
+
     if (_appLifecycleStateLocked) {
       return;
     }

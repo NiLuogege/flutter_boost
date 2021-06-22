@@ -102,7 +102,9 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
     // 刷新页面以显示 初始化路由对应的页面
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Logger.log("  initState addPostFrameCallback");
+      //刷新页面
       refresh();
+      //发送生命周期事件
       _addAppLifecycleStateEventListener();
     });
 
